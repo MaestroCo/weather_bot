@@ -29,18 +29,25 @@ regions = {
     "Qashqadaryo viloyati": "Qarshi",
     "Surxondaryo viloyati": "Termez",
     "Xorazm viloyati": "Urgench",
-    "Qoraqalpog'iston": "Nukus",
+    "Qoraqalpog'iston respublikasi": "Nukus",
     "Toshkent viloyati": "Tashkent",
-    "Toshkent shahri": "Tashkent"
 }
 
-cities = [
-    "Farg'ona shahri", "Toshkent shahri", "Qoraqalpog'iston", "Andijon shahri",
-    "Namangan shahri", "Xorazm shahri", "Sirdaryo shahri", "Samarqand shahri", "Qashqadaryo shahri",
-    "Buxoro shahri", "Surxondaryo shahri", "Jizzax shahri", "Navoiy shahri", "Qo'qon shahri", "Guliston shahri",
-    "Marg'ilon shahri", "Angren shahri", "Xiva shahri", "Pop shahri", "Angren shahri", "Urgut shahri", "Bekobod shahri",
-    "Denov shari", "Zomin shahri", "Chust shahri", "Shahrixon shahri", "Qorako'l shahri", "Nurota shahri"
-]
+cities = {
+    "Farg'ona shahri": open("image/fargona.png", 'rb'), "Toshkent shahri": open('image/toshkent.jpg', 'rb'), "Qoraqalpog'iston":
+        open('image/nukus.png', 'rb'), "Andijon shahri": open("image/andijon.jpg", 'rb'), "Namangan shahri"
+    : open('image/namangan.png', 'rb'), "Urganch shahri": open('image/urganch.png', 'rb'), "Samarqand shahri"
+    : open('image/samarqand.png', 'rb'), "Qashqadaryo shahri": open('image/qarshi.png', 'rb'),
+    "Buxoro shahri": open('image/buxoro.jpg', 'rb'), "Termiz shahri": open('image/termiz.png', 'rb'), "Jizzax shahri"
+    : open('image/jizzax.png', 'rb'), "Navoiy shahri": open('image/navoiy.png', 'rb'), "Qo'qon shahri"
+    : open('image/qoqon.png', 'rb'), "Guliston shahri": open('image/guliston.png', 'rb'),
+    "Marg'ilon shahri": open('image/margion.png', 'rb'), "Angren shahri": open('image/angren.png', 'rb'), "Xiva shahri"
+    : open('image/xiva.png', 'rb'), "Pop shahri": open('image/pop.png', 'rb'), "Urgut shahri": open('image/urgut.jpg', 'rb'),
+    "Bekobod shahri": open('image/bekobod.png', 'rb'), "Denov shari": open('image/denov.jpg', 'rb'), "Zomin shahri"
+    : open('image/zomin.png', 'rb'), "Chust shahri": open('image/chust.jpg', 'rb'), "Shahrixon shahri": open('image/shsahrixon.png', 'rb'),
+    "Qorako'l shahri": open('image/qorakol.png', 'rb'), "Nurota shahri": open('image/nurota.png', 'rb')
+
+}
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message: Message):
@@ -95,7 +102,7 @@ def send_weather_info(message: Message):
 <b>Eng yuqori harorat::</b> <i>{max_temp}</i>🌡
 <b>Eng past harorat::</b> <i>{min_temp}</i>🌡
 <b>Shamol tezligi:</b> <i>{wind} m/s</i>💨
-<b>Bulut darajasi:</b> <i>{clouds}</i>☁️
+<b>Bulut darajasi:</b> <i>{clouds}%</i>☁️
 <b>Quyosh chiqishi:</b> <i>{sunrise}</i>🌄
 <b>Quyosh botishi:</b> <i>{sunset}</i>🌇"""
         bot.send_message(chat_id, info, reply_markup=button_area())
@@ -138,7 +145,7 @@ def process_location(message: Message):
 <b>Eng yuqori harorat:</b> <i>{max_temp}</i>🌡
 <b>Eng past harorat:</b> <i>{min_temp}</i>🌡
 <b>Shamol tezligi:</b> <i>{wind} m/s</i>💨
-<b>Bulut darajasi:</b> <i>{clouds}</i>☁️
+<b>Bulut darajasi:</b> <i>{clouds}%</i>☁️
 <b>Quyosh chiqishi:</b> <i>{sunrise}</i>🌄
 <b>Quyosh botishi:</b> <i>{sunset}</i>🌇"""
         bot.send_message(chat_id, info, reply_markup=button_weather())
@@ -182,13 +189,31 @@ def eur_to_uzs(message: Message):
     bot.send_message(chat_id, f"<b>1</b> <i>RUB</i><b> {rubtouzs}</b><i> UZS ga teng!</i>")
 
 # Ramazon taqvimi kod qismi --------------------------------------------------------------------------------------------
-# @bot.message_handler(func=lambda message: message.text == 'Ramazon taqvimi🗓')
-# def ramazon_taqvimi(message: Message):
-#     chat_id = message.chat.id
-#     bot.send_message(chat_id, f"<b>Ramazon taqvimi🗓</b>", reply_markup=ReplyKeyboardRemove())
-#     bot.send_message(chat_id, f"<b>Yashash hududizni tanlang👇</b>", reply_markup=button_ramadan())
+@bot.message_handler(func=lambda message: message.text == 'Ramazon taqvimi🗓')
+def ramazon_taqvimi(message: Message):
+    chat_id = message.chat.id
+    bot.send_message(chat_id, f"<b>Ramazon taqvimi🗓</b>", reply_markup=ReplyKeyboardRemove())
+    bot.send_message(chat_id, f"<b>Yashash hududizni tanlang👇</b>", reply_markup=button_ramadan())
 
-    """Ramazon qismi tugatilmagan"""
+@bot.message_handler(func=lambda message: message.text in cities)
+def send_pic(m: Message):
+    chat_id = m.chat.id
+    city_name = m.text
+    pic = cities[city_name]
+    bot.send_message(chat_id, f"<b>{city_name} ramazon taqvimi rasim ko'rinishida👇</b>")
+    bot.send_photo(chat_id, pic)
+    bot.send_message(chat_id, f"<b>Roʻza tutish (saharlik, ogʻiz yopish) duosi🤲 </b>\n\n"
+                              f"<i>Navaytu an asuvma sovma shahri ramazona minal fajri ilal magʻribi, "
+                              f"xolisan lillahi taʼaalaa Allohu akbar. </i>\n\n<b> Maʼnosi: </b><i>Ramazon oyining "
+                              f"roʻzasini subhdan to "
+                              f"kun botguncha tutmoqni niyat qildim. Xolis Alloh uchun Alloh buyukdir.</i> \n\n"
+                              f"➖➖➖➖➖➖➖➖➖➖➖➖➖➖\n\n"
+                              f"<b>Iftorlik (ogʻiz ochish) duosi🤲 </b>\n\n"
+                              f"<i>Allohumma laka sumtu va bika aamantu va aʼlayka tavakkaltu va aʼlaa rizqika aftartu,"
+                              f"fagʻfirliy ma qoddamtu va maa axxortu birohmatika yaa arhamar roohimiyn. </i>\n\n"
+                              f"<b> Maʼnosi: </b><i>Ey Alloh, ushbu Roʻzamni Sen uchun tutdim va Senga iymon keltirdim "
+                              f"va Senga tavakkal qildim va bergan rizqing bilan iftor qildim. Ey mehribonlarning eng "
+                              f"mehriboni, mening avvalgi va keyingi gunohlarimni magʻfirat qilgil.</i>", reply_markup=button_ramadan())
 
 @bot.message_handler(func=lambda message: message.text == 'Biz haqimizda👤')
 def biz_haqimizda(message: Message):
@@ -208,6 +233,8 @@ def send_back(message: Message):
     info = f"""<b>Orqaga⬅️</b>"""
     bot.send_message(chat_id, info, reply_markup=ReplyKeyboardRemove())
     bot.send_message(chat_id, "Asosiy menyuga qaytildi📫", reply_markup=button_func())
+
+
 
 
 

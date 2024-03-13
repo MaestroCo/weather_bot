@@ -4,10 +4,10 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMar
 def button_func():
     markup = ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
     btn1 = KeyboardButton("Ob-havo ma'lumoti🌤")
-    # btn2 = KeyboardButton("Ramazon taqvimi🗓")
+    btn2 = KeyboardButton("Ramazon taqvimi🗓")
     btn3 = KeyboardButton("Valyuta kursi💴")
     btn4 = KeyboardButton("Biz haqimizda👤")
-    markup.add(btn1, btn3, btn4)
+    markup.add(btn1, btn2, btn3, btn4)
     return markup
 
 def button_weather():
@@ -22,8 +22,7 @@ def button_area():
     markup = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     btn1 = KeyboardButton("Farg'ona viloyati")
     btn2 = KeyboardButton("Toshkent viloyati")
-    btn15 = KeyboardButton("Toshkent shahri")
-    btn13 = KeyboardButton("Qoraqalpog'iston")
+    btn13 = KeyboardButton("Qoraqalpog'iston respublikasi")
     btn3 = KeyboardButton("Andijon viloyati")
     btn4 = KeyboardButton("Namangan viloyati")
     btn5 = KeyboardButton("Xorazm viloyati")
@@ -35,7 +34,7 @@ def button_area():
     btn11 = KeyboardButton("Jizzax viloyati")
     btn12 = KeyboardButton("Navoiy viloyati")
     btn14 = KeyboardButton("Asosiy menyu⬅️")
-    markup.add(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12, btn13, btn15, btn14)
+    markup.add(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12, btn13, btn14)
     return markup
 
 def button_currensy():
@@ -47,6 +46,7 @@ def button_currensy():
     markup.add(btn1, btn3, btn4, btn7)
     return markup
 
+
 def button_ramadan():
     markup = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     btn1 = KeyboardButton("Farg'ona shahri")
@@ -54,12 +54,12 @@ def button_ramadan():
     btn13 = KeyboardButton("Qoraqalpog'iston")
     btn3 = KeyboardButton("Andijon shahri")
     btn4 = KeyboardButton("Namangan shahri")
-    btn5 = KeyboardButton("Xorazm shahri")
+    btn5 = KeyboardButton("Urganch shahri")
     btn6 = KeyboardButton("Sirdaryo shahri")
     btn7 = KeyboardButton("Samarqand shahri")
     btn8 = KeyboardButton("Qashqadaryo shahri")
     btn9 = KeyboardButton("Buxoro shahri")
-    btn10 = KeyboardButton("Surxondaryo shahri")
+    btn10 = KeyboardButton("Termiz shahri")
     btn11 = KeyboardButton("Jizzax shahri")
     btn12 = KeyboardButton("Navoiy shahri")
     btn16 = KeyboardButton("Qo'qon shahri")
